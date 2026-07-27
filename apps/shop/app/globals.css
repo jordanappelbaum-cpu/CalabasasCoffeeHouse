@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+
+/**
+ * CCH brand tokens, from the Calabasas Coffee House Brand Identity Guidelines
+ * and matched to the mobile app's src/design-system/colors.ts so the store and
+ * the app look like the same company.
+ */
+@theme {
+  --color-cch-blue: #455766;
+  --color-cch-blue-light: #5a6b7a;
+  --color-cch-blue-dark: #36414d;
+  --color-cch-cream: #f7f1ea;
+
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #666666;
+  --color-ink-faint: #999999;
+
+  --color-line: #e4ddd4;
+
+  --font-display: ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cch-cream);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Visible focus for keyboard users, suppressed for mouse clicks. */
+  :focus-visible {
+    outline: 2px solid var(--color-cch-blue);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Tailwind v4 cannot @apply a custom class, so the shared button base is a
+     plain selector list rather than a `.btn` class the variants extend. */
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+           text-sm font-semibold transition-colors disabled:cursor-not-allowed
+           disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-cch-blue text-white hover:bg-cch-blue-dark;
+  }
+  .btn-secondary {
+    @apply border border-cch-blue/30 bg-transparent text-cch-blue hover:bg-cch-blue/5;
+  }
+  .field {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-[15px]
+           text-ink placeholder:text-ink-faint focus:border-cch-blue focus:outline-none;
+  }
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium text-ink-soft;
+  }
+}
+
+/* Respect users who have asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

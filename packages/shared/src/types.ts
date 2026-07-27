@@ -137,22 +137,43 @@ export interface ShippingRate {
  * charged — this comes back from `shop_quote` and is recomputed again inside
  * `shop_create_payment_intent` before the PaymentIntent is created.
  */
+/** A cart line as priced by the server. Client prices are never used. */
+export interface QuotedItem {
+  productId: string;
+  variantId: string;
+  title: string;
+  variantTitle: string;
+  sku: string;
+  qty: number;
+  unitPriceCents: number;
+  lineTotalCents: number;
+}
+
 export interface Quote {
+  items: QuotedItem[];
   subtotal_cents: number;
   discount_cents: number;
+  discount_code: string | null;
+  /** Why a submitted code was rejected. Null when none was submitted or it was valid. */
+  discount_error: string | null;
   shipping_cents: number;
   tax_cents: number;
+  /**
+   * Whether Stripe Tax actually answered. Distinguishes "genuinely $0 tax"
+   * from "tax could not be calculated" — both show tax_cents: 0.
+   */
+  tax_available: boolean;
   total_cents: number;
   currency: string;
-  /** True when the subtotal cleared shop_settings.free_shipping_threshold_cents. */
+  /** True when the post-discount subtotal cleared the free-shipping threshold. */
   free_shipping_applied: boolean;
   /** Cents still needed to unlock free shipping; 0 once unlocked. */
   free_shipping_remaining_cents: number;
+  free_shipping_threshold_cents: number;
   rates: ShippingRate[];
-  selected_rate_id: string | null;
+  /** The rate the server priced this quote against. Null without an address. */
+  selected_rate: ShippingRate | null;
   shipment_id: string | null;
-  discount_code: string | null;
-  discount_error: string | null;
 }
 
 // ---------------------------------------------------------------------------
