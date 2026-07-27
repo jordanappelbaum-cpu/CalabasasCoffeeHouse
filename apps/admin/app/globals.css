@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+/* Dashboard palette: CCH blue as the accent, neutral slate for dense data.
+   Deliberately more utilitarian than the storefront — this is a work tool. */
+@theme {
+  --color-cch-blue: #455766;
+  --color-cch-blue-dark: #36414d;
+  --color-cch-cream: #f7f1ea;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cch-blue);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2
+           text-sm font-medium transition-colors disabled:cursor-not-allowed
+           disabled:opacity-50;
+  }
+  .btn-primary  { @apply bg-cch-blue text-white hover:bg-cch-blue-dark; }
+  .btn-secondary{ @apply border border-slate-300 bg-white text-slate-700 hover:bg-slate-50; }
+  .btn-danger   { @apply border border-red-300 bg-white text-red-700 hover:bg-red-50; }
+
+  .field {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm
+           focus:border-cch-blue focus:outline-none;
+  }
+  .label { @apply mb-1 block text-xs font-medium text-slate-600; }
+  .card  { @apply rounded-xl border border-slate-200 bg-white; }
+  .th    { @apply px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500; }
+  .td    { @apply px-4 py-3 text-sm text-slate-700; }
+}
