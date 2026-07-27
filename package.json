@@ -1,0 +1,21 @@
+{
+  "name": "cch-web",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Calabasas Coffee House online store and admin dashboard",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:shop": "npm run dev --workspace=@cch/shop",
+    "dev:admin": "npm run dev --workspace=@cch/admin",
+    "build:shop": "npm run build --workspace=@cch/shop",
+    "build:admin": "npm run build --workspace=@cch/admin",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  }
+}
