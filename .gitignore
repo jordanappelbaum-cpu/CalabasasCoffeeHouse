@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# THIS REPOSITORY IS PUBLIC. Nothing secret may ever be committed.
+#
+# Real secrets (Stripe secret key, Shippo token, Resend key, Supabase service
+# role key) live in Supabase Edge Function secrets and Netlify environment
+# variables. They must never appear in this tree.
+#
+# The only keys that belong in client code are the Supabase ANON key and the
+# Stripe PUBLISHABLE key, both of which are designed to be public.
+# ---------------------------------------------------------------------------
+
+# env files — all of them, not just *.local
+.env
+.env.*
+!.env.example
+
+# credentials / keys of any kind
+*.pem
+*.key
+*.p8
+*.p12
+*.jks
+*.mobileprovision
+service-account*.json
+
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+build/
+dist/
+
+# netlify
+.netlify/
+
+# testing
+coverage/
+
+# misc
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
