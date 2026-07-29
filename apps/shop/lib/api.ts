@@ -9,7 +9,7 @@
  * The anon key below is public by design — it is what RLS is written against.
  */
 
-import type { ProductWithDetails, Quote, ShippingAddress } from '@cch/shared';
+import type { ProductWithDetails, ProductLine, ProductLineId, Quote, ShippingAddress } from '@cch/shared';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -74,6 +74,7 @@ export interface CatalogProduct extends ProductWithDetails {
 
 export interface CatalogResponse {
   products: CatalogProduct[];
+  lines: ProductLine[];
   settings: {
     free_shipping_threshold_cents: number;
     store_accepting_orders: boolean;
@@ -81,12 +82,18 @@ export interface CatalogResponse {
   } | null;
 }
 
-export function getCatalog(): Promise<CatalogResponse> {
-  return call<CatalogResponse>('shop_get_products', {});
+/** Whole catalog, or one line when `line` is given. */
+export function getCatalog(line?: ProductLineId): Promise<CatalogResponse> {
+  return call<CatalogResponse>('shop_get_products', line ? { line } : {});
 }
 
-export function getProduct(slug: string): Promise<{ product: CatalogProduct | null }> {
-  return call<{ product: CatalogProduct | null }>('shop_get_products', { slug });
+export function getProduct(
+  slug: string
+): Promise<{ product: CatalogProduct | null; lines: ProductLine[] }> {
+  return call<{ product: CatalogProduct | null; lines: ProductLine[] }>(
+    'shop_get_products',
+    { slug }
+  );
 }
 
 // ---------------------------------------------------------------------------

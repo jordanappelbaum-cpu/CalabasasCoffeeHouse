@@ -22,7 +22,8 @@ export function SiteFooter() {
         <nav aria-label="Shop" className="text-sm">
           <h2 className="mb-2 font-semibold text-ink">Shop</h2>
           <ul className="space-y-1.5 text-ink-soft">
-            <li><a href="/" className="hover:text-cch-blue">All products</a></li>
+            <li><a href="/merch" className="hover:text-cch-blue">CCH Merch</a></li>
+            <li><a href="/good-things-brewing" className="hover:text-cch-blue">Good Things Brewing</a></li>
             <li><a href="/track" className="hover:text-cch-blue">Track your order</a></li>
             <li><a href="/shipping-returns" className="hover:text-cch-blue">Shipping &amp; returns</a></li>
             <li>

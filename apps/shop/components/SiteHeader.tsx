@@ -25,22 +25,29 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1 text-sm sm:gap-4">
+        <nav className="flex items-center gap-1 text-sm sm:gap-3">
+          {/* The two product lines lead the nav — they are what people came for. */}
+          <Link
+            href="/merch"
+            className="rounded-full px-3 py-2 font-medium text-ink hover:text-cch-blue"
+          >
+            Merch
+          </Link>
+          <Link
+            href="/good-things-brewing"
+            className="rounded-full px-3 py-2 font-medium text-ink hover:text-cch-blue"
+          >
+            Coffee &amp; Matcha
+          </Link>
           <a
             href={`${CAFE}/order`}
-            className="hidden rounded-full px-3 py-2 text-ink-soft hover:text-cch-blue sm:block"
+            className="hidden rounded-full px-3 py-2 text-ink-soft hover:text-cch-blue lg:block"
           >
             Order coffee
           </a>
-          <a
-            href={CAFE}
-            className="hidden rounded-full px-3 py-2 text-ink-soft hover:text-cch-blue sm:block"
-          >
-            Visit the cafe
-          </a>
           <Link
             href="/track"
-            className="rounded-full px-3 py-2 text-ink-soft hover:text-cch-blue"
+            className="hidden rounded-full px-3 py-2 text-ink-soft hover:text-cch-blue sm:block"
           >
             Track order
           </Link>

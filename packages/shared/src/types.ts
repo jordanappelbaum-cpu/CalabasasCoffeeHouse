@@ -22,13 +22,29 @@
  */
 export type ProductStatus = 'draft' | 'coming_soon' | 'active' | 'archived';
 
+/**
+ * The two customer-facing lines. They share one cart and one checkout, so a
+ * customer can buy a hoodie and a bag of beans in a single order.
+ */
+export type ProductLineId = 'merch' | 'good_things_brewing';
+
+export interface ProductLine {
+  id: ProductLineId;
+  name: string;
+  tagline: string | null;
+  description: string | null;
+  sort_order: number;
+  active: boolean;
+}
+
 export type ProductCategory =
   | 'apparel'
   | 'headwear'
   | 'drinkware'
   | 'accessories'
   | 'coffee'
-  | 'matcha';
+  | 'matcha'
+  | 'equipment';
 
 export interface Product {
   id: string;
@@ -38,7 +54,14 @@ export interface Product {
   active: boolean;
   status: ProductStatus;
   slug: string;
+  product_line: ProductLineId;
   category: ProductCategory | null;
+  /**
+   * Stripe Tax product tax code. Null falls back to general tangible goods,
+   * which is correct for merch. Packaged coffee and matcha are food and are
+   * taxed differently in California.
+   */
+  tax_code: string | null;
   seo_title: string | null;
   seo_description: string | null;
   sort_order: number;
