@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { formatPrice } from '@cch/shared';
 import type { ProductStatus } from '@cch/shared';
 import { supabase } from '@/lib/supabase';
@@ -170,11 +171,14 @@ export default function InventoryPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Inventory</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Changes save immediately and go live on the website within a minute.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Inventory</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Changes save immediately and go live on the website within a minute.
+          </p>
+        </div>
+        <Link href="/products/new" className="btn-primary">New product</Link>
       </div>
 
       {missingWeights > 0 && (
@@ -202,8 +206,19 @@ export default function InventoryPage() {
                 </div>
 
                 <div className="flex-1">
-                  <h2 className="font-medium">{product.title}</h2>
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="font-medium hover:text-cch-blue"
+                  >
+                    {product.title}
+                  </Link>
                   <p className="font-mono text-xs text-slate-500">/{product.slug}</p>
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="text-xs text-cch-blue underline"
+                  >
+                    Photos &amp; description
+                  </Link>
                 </div>
 
                 <div>
