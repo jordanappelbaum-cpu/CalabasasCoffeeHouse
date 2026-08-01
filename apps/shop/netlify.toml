@@ -11,6 +11,15 @@
 # Do NOT add NPM_FLAGS="--prefix=..". Netlify detects npm workspaces natively;
 # a prefix resolves from the repo root and escapes to /opt (EACCES).
 
+[build]
+  # Netlify runs this from the REPO ROOT (/opt/build/repo), not from the base
+  # directory — the log line "Current directory: /opt/build/repo" with
+  # "packagePath: apps/shop" confirms it. A bare `npm run build` therefore hits
+  # the root package.json, which has no build script. Scope it to the workspace.
+  command = "npm run build --workspace=@cch/shop"
+  # Relative to the base directory (baseRelDir: true) -> apps/shop/.next
+  publish = ".next"
+
 [build.environment]
   NODE_VERSION = "20"
 

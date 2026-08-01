@@ -3,6 +3,15 @@
 # Set ONLY "Base directory" = apps/admin in the Netlify UI. Leave build command
 # and publish directory BLANK. See apps/shop/netlify.toml for why.
 
+[build]
+  # Netlify runs this from the REPO ROOT (/opt/build/repo), not from the base
+  # directory — the log line "Current directory: /opt/build/repo" with
+  # "packagePath: apps/admin" confirms it. A bare `npm run build` therefore hits
+  # the root package.json, which has no build script. Scope it to the workspace.
+  command = "npm run build --workspace=@cch/admin"
+  # Relative to the base directory (baseRelDir: true) -> apps/admin/.next
+  publish = ".next"
+
 [build.environment]
   NODE_VERSION = "20"
 
