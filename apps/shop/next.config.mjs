@@ -8,6 +8,32 @@ const nextConfig = {
   outputFileTracingRoot: path.join(import.meta.dirname, '../../'),
   // The shared package is TypeScript source, not a build artifact.
   transpilePackages: ['@cch/shared'],
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              // Stripe.js must load and run for checkout.
+              "script-src 'self' 'unsafe-inline' https://js.stripe.com",
+              "frame-src https://js.stripe.com https://hooks.stripe.com",
+              "img-src 'self' data: https://qthptztogfcufabviyrx.supabase.co",
+              "style-src 'self' 'unsafe-inline'",
+              "connect-src 'self' https://qthptztogfcufabviyrx.supabase.co https://api.stripe.com",
+              "font-src 'self' data:",
+            ].join('; '),
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
