@@ -1,20 +1,18 @@
 # Netlify config for the storefront (shop.calabasascoffeehouse.com).
-# Set "Base directory" to apps/shop in the Netlify site settings; Netlify then
-# reads this file from that directory.
-
-[build]
-  command = "npm run build"
-  publish = ".next"
+#
+# Set ONLY "Base directory" = apps/shop in the Netlify UI. Leave build command
+# and publish directory BLANK there.
+#
+# Nothing here sets `command` or `publish` on purpose: Netlify auto-detects
+# Next.js and applies `npm run build` with a `.next` publish dir relative to the
+# base directory. Specifying them in both places compounds the paths into
+# apps/shop/apps/shop/.next and the build fails.
+#
+# Do NOT add NPM_FLAGS="--prefix=..". Netlify detects npm workspaces natively;
+# a prefix resolves from the repo root and escapes to /opt (EACCES).
 
 [build.environment]
   NODE_VERSION = "20"
-  # Do NOT set NPM_FLAGS="--prefix=..". Netlify detects npm workspaces on its
-  # own and installs from the repo root; a --prefix resolves relative to the
-  # repo root rather than the base directory and escapes to /opt, which the
-  # build user cannot write to (EACCES on /opt/package-lock.json).
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   for = "/*"
@@ -23,5 +21,4 @@
     X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
-    # No unsafe-inline on scripts. Stripe needs its js.stripe.com frame + script.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; img-src 'self' data: https://qthptztogfcufabviyrx.supabase.co; style-src 'self' 'unsafe-inline'; connect-src 'self' https://qthptztogfcufabviyrx.supabase.co https://api.stripe.com; font-src 'self' data:"

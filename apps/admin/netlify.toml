@@ -1,24 +1,14 @@
 # Netlify config for the admin dashboard (admin.calabasascoffeehouse.com).
-# Set "Base directory" to apps/admin in the Netlify site settings.
-
-[build]
-  command = "npm run build"
-  publish = ".next"
+#
+# Set ONLY "Base directory" = apps/admin in the Netlify UI. Leave build command
+# and publish directory BLANK. See apps/shop/netlify.toml for why.
 
 [build.environment]
   NODE_VERSION = "20"
-  # Do NOT set NPM_FLAGS="--prefix=..". Netlify detects npm workspaces on its
-  # own and installs from the repo root; a --prefix resolves relative to the
-  # repo root rather than the base directory and escapes to /opt, which the
-  # build user cannot write to (EACCES on /opt/package-lock.json).
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 [[headers]]
   for = "/*"
   [headers.values]
-    # This dashboard must never be indexed or framed.
     X-Robots-Tag = "noindex, nofollow, noarchive"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
