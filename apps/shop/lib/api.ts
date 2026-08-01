@@ -13,6 +13,18 @@ import type { ProductWithDetails, ProductLine, ProductLineId, Quote, ShippingAdd
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+// Without this, a missing variable surfaces during the build as
+// "Failed to parse URL from undefined/functions/v1/...", which says nothing
+// about the actual problem. Fail loudly and specifically instead.
+if (!SUPABASE_URL || !ANON_KEY) {
+  throw new Error(
+    'Missing Supabase configuration. Set NEXT_PUBLIC_SUPABASE_URL and ' +
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY — in .env.local for local development, ' +
+      'or in Site configuration → Environment variables on Netlify.'
+  );
+}
+
 const FN = `${SUPABASE_URL}/functions/v1`;
 
 /** Error carrying the stable `code` the edge functions return. */

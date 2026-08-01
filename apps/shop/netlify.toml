@@ -8,8 +8,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  # Install from the monorepo root so the @cch/shared workspace resolves.
-  NPM_FLAGS = "--prefix=../.."
+  # Do NOT set NPM_FLAGS="--prefix=..". Netlify detects npm workspaces on its
+  # own and installs from the repo root; a --prefix resolves relative to the
+  # repo root rather than the base directory and escapes to /opt, which the
+  # build user cannot write to (EACCES on /opt/package-lock.json).
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
