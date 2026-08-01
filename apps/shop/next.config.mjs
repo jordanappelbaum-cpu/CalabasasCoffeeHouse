@@ -35,6 +35,10 @@ const nextConfig = {
     ];
   },
   images: {
+    // Netlify's IPX optimiser has a broken sharp/libvips on this build image,
+    // so route through Netlify Image CDN via a custom loader instead.
+    loader: 'custom',
+    loaderFile: './lib/imageLoader.ts',
     remotePatterns: [
       {
         protocol: 'https',

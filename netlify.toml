@@ -1,0 +1,13 @@
+# Shared Netlify config for both sites in this repo.
+#
+# Build command and publish directory are set per-site in Netlify, NOT here —
+# the two sites build different apps from this one repo, so a shared [build]
+# block would be wrong for one of them.
+#
+# This file exists only to allow-list remote image sources for Netlify Image
+# CDN. Without it the CDN refuses to fetch product photos from Supabase.
+
+[images]
+  remote_images = [
+    "https://qthptztogfcufabviyrx\\.supabase\\.co/storage/v1/object/public/merch/.*"
+  ]
