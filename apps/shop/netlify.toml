@@ -1,0 +1,25 @@
+# Netlify config for the storefront (shop.calabasascoffeehouse.com).
+#
+# THIS FILE IS THE SOURCE OF TRUTH. Netlify's UI fields for build command and
+# publish directory are ignored when set here — that is the "overwritten by
+# netlify.toml" notice shown in the dashboard, and it is what we want.
+#
+# The site has a monorepo package path of apps/shop, which means:
+#
+#   * Netlify reads THIS file (from apps/shop) but runs the build command from
+#     the REPO ROOT (/opt/build/repo). A bare `npm run build` therefore hits the
+#     root package.json, which has no build script — hence the workspace flag.
+#   * Paths below are resolved relative to apps/shop (baseRelDir), so `.next`
+#     means apps/shop/.next. Writing "apps/shop/.next" here would double it.
+#   * publish must NOT be left unset: it then defaults to apps/shop itself, and
+#     the Next.js plugin rejects a publish dir equal to the base dir.
+#
+# Do NOT set NPM_FLAGS="--prefix=..": it resolves from the repo root, escapes to
+# /opt, and fails with EACCES on /opt/package-lock.json.
+
+[build]
+  command = "npm run build --workspace=@cch/shop"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
