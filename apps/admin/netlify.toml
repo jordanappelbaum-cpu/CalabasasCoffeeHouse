@@ -1,7 +1,7 @@
 # Netlify config for the admin dashboard (admin.calabasascoffeehouse.com).
 #
-# Set ONLY "Base directory" = apps/admin in the Netlify UI. Leave build command
-# and publish directory BLANK. See apps/shop/netlify.toml for why.
+# In the Netlify UI set "Base directory" = apps/admin. See apps/shop/netlify.toml
+# for why the command is workspace-scoped and why NPM_FLAGS must not be set.
 
 [build]
   # Netlify runs this from the REPO ROOT (/opt/build/repo), not from the base

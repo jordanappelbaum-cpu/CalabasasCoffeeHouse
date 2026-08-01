@@ -1,15 +1,16 @@
 # Netlify config for the storefront (shop.calabasascoffeehouse.com).
 #
-# Set ONLY "Base directory" = apps/shop in the Netlify UI. Leave build command
-# and publish directory BLANK there.
+# In the Netlify UI set "Base directory" = apps/shop. The command and publish
+# values below take precedence over anything in the UI, so those fields can be
+# left as-is.
 #
-# Nothing here sets `command` or `publish` on purpose: Netlify auto-detects
-# Next.js and applies `npm run build` with a `.next` publish dir relative to the
-# base directory. Specifying them in both places compounds the paths into
-# apps/shop/apps/shop/.next and the build fails.
+# Two things this file exists to prevent, both learned the hard way:
 #
-# Do NOT add NPM_FLAGS="--prefix=..". Netlify detects npm workspaces natively;
-# a prefix resolves from the repo root and escapes to /opt (EACCES).
+#   1. Do NOT set NPM_FLAGS="--prefix=..". Netlify detects npm workspaces
+#      natively; a prefix resolves from the repo root, escapes to /opt, and
+#      fails with EACCES on /opt/package-lock.json.
+#   2. The build command must be workspace-scoped, because Netlify executes it
+#      from the repo root even though it reads this file from apps/shop.
 
 [build]
   # Netlify runs this from the REPO ROOT (/opt/build/repo), not from the base
